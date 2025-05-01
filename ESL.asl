@@ -1,14 +1,12 @@
 state("ErebanShadowLegacy")
 {
-    int Loading: "GameAssembly.dll", 0x03502018, 0xB8, 0x60, 0x290, 0x138;
-    int MissionEndScreen: "UnityPlayer.dll", 0x01BD77C0, 0x5E0, 0x6C8, 0xC10, 0x840;
+    int Loading: "GameAssembly.dll", 0x03502018, 0xB8, 0x60, 0x290, 0x138; // 0 and 1 for loading and not loading respectively
+    int MssionNumber: "GameAssembly.dll", 0x34F6828, 0xB8, 0x18, 0x38; // 0 when first loading up the game, 1 for mission 1 etc etc. -1 when in menu after being in a mission and leaving
 }
 
 startup
 {
     vars.CompletedSplits = new List<string>();
-    vars.HasSplit = false;
-    vars.InMission = false;
 }
 
 init
@@ -26,43 +24,15 @@ init
 
 update
 {
-    // Determine if the player is in a mission based on the loading screen status
-    if (current.Loading == 0 && old.Loading == 1) 
-    {
-        vars.InMission = true;
-        vars.HasSplit = false; // Reset the split flag when entering a new mission
-    }
-    
-    if (current.Loading == 1 && old.Loading == 0) 
-    {
-        vars.InMission = false;
-    }
 }
 
 split
 {
-    // Ensure we only split when we are in a mission
-    if (vars.InMission && vars.Splits.Count > 0) 
+    if (current.MissionNumber == old.MissionNumber + 1)
     {
-        // Splits upon mission end screen appearing
-        if (current.MissionEndScreen == 1 && old.MissionEndScreen == 0) 
-        {
-            if (!vars.HasSplit) 
-            {
-                vars.HasSplit = true;
-                
-                // Move the first item from vars.Splits to vars.CompletedSplits
-                vars.CompletedSplits.Add(vars.Splits[0]);
-                vars.Splits.RemoveAt(0);
-                
-                return true;
-            }
-        }
-        
-        // Reset the split flag when the mission end screen is no longer active
-        if (current.MissionEndScreen == 0 && old.MissionEndScreen == 1) {
-            vars.HasSplit = false;
-        }
+        vars.CompletedSplits.Add(vars.Splits[0]);
+        vars.Splits.RemoveAt(0);
+        return true;
     }
 }
 
@@ -78,8 +48,6 @@ onReset
         "chapter 7"
     };
     vars.CompletedSplits.Clear();
-    vars.HasSplit = false;
-    vars.InMission = false;
 }
 
 isLoading
