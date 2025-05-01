@@ -1,17 +1,19 @@
 state("ErebanShadowLegacy")
 {
     int Loading: "GameAssembly.dll", 0x03502018, 0xB8, 0x60, 0x290, 0x138; // 0 and 1 for loading and not loading respectively
-    int MssionNumber: "GameAssembly.dll", 0x34F6828, 0xB8, 0x18, 0x38; // 0 when first loading up the game, 1 for mission 1 etc etc. -1 when in menu after being in a mission and leaving
+    int MissionNumber: "GameAssembly.dll", 0x34F6828, 0xB8, 0x18, 0x38; // 0 when first loading up the game, 1 for mission 1 etc etc. -1 when in menu after being in a mission and leaving
 }
 
 startup
 {
     vars.CompletedSplits = new List<string>();
+    vars.Splits = new List<string>();
 }
 
 init
 {
-    vars.Splits = new List<string> {
+    vars.Splits = new List<string> 
+    {
         "chapter 1",
         "chapter 2",
         "chapter 3",
@@ -28,7 +30,7 @@ update
 
 split
 {
-    if (current.MissionNumber == old.MissionNumber + 1)
+    if (current.MissionNumber != old.MissionNumber)
     {
         vars.CompletedSplits.Add(vars.Splits[0]);
         vars.Splits.RemoveAt(0);
@@ -38,7 +40,9 @@ split
 
 onReset
 {
-    vars.Splits = new List<string> {
+    vars.Splits.Clear();
+    vars.Splits = new List<string> 
+    {
         "chapter 1",
         "chapter 2",
         "chapter 3",
