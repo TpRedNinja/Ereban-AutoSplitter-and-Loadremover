@@ -19,7 +19,7 @@ startup
     vars.Splits = new List<string>();
     settings.Add("100%", false, "100%");
     settings.SetToolTip("100%", "Splits on gainning a shadow orb, tech card, & catalyzer.");
-    settings.Add("orb splits", false)
+    settings.Add("orb splits", false);
     settings.SetToolTip("orb splits", "Splits on gaining a shadow orb.");
 
 }
