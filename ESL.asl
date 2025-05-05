@@ -21,6 +21,13 @@ startup
     settings.SetToolTip("100%", "Splits on gainning a shadow orb, tech card, & catalyzer.");
     settings.Add("orb splits", false);
     settings.SetToolTip("orb splits", "Splits on gaining a shadow orb.");
+    settings.Add("tech splits", false);
+    settings.SetToolTip("tech splits", "Splits on gaining a tech card.");
+    settings.Add("catalyzer splits", false);
+    settings.SetToolTip("catalyzer splits", "Splits on gaining a catalyzer.");
+
+    //asl help
+    Assembly.Load(File.ReadAllBytes("Components/asl-help")).CreateInstance("Unity");
 
 }
 
@@ -55,12 +62,22 @@ split
         return true;
     }
 
-    if (Settings["100%"] && (current.shadoworb > old.shadoworb || current.techcard > old.techcard || current.catalyzer > old.catalyzer))
+    if (settings["100%"] && (current.shadoworb > old.shadoworb || current.techcard > old.techcard || current.catalyzer > old.catalyzer))
     {
         return true;
     }
 
     if (settings["orb splits"] && current.shadoworb > old.shadoworb)
+    {
+        return true;
+    }
+
+    if (settings["tech splits"] && current.techcard > old.techcard)
+    {
+        return true;
+    }
+
+    if (settings["catalyzer splits"] && current.catalyzer > old.catalyzer)
     {
         return true;
     }
