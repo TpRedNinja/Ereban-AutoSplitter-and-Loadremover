@@ -47,7 +47,7 @@ init
 
 start
 {
-    if (current.Cutscene == 1 && old.Cutscene == 0)
+    if (current.Cutscene == 0 && old.Cutscene == 1)
     {
         return true;
     }
