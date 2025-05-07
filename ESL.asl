@@ -72,7 +72,7 @@ split
         return true;
     }
 
-    if (current.MissionNumber > old.MissionNumber && settings["Split 2"])
+    if (current.MissionEndScreen == 1 && old.MissionEndScreen == 0 && settings["Split 2"])
     {
         vars.CompletedSplits.Add(vars.Splits[0]);
         vars.Splits.RemoveAt(0);
