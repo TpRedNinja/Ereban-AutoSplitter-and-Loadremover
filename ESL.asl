@@ -92,22 +92,22 @@ split
         return true;
     }
 
-    if (settings["100%"] && (current.shadoworb > old.shadoworb || current.techcard > old.techcard || current.catalyzer > old.catalyzer) && current.Loading == 0)
+    if (settings["100%"] && (current.shadoworb > old.shadoworb || current.techcard > old.techcard || current.catalyzer > old.catalyzer))
     {
         return true;
     }
 
-    if (settings["orb splits"] && current.shadoworb > old.shadoworb && current.Loading == 0)
+    if (settings["orb splits"] && current.shadoworb > old.shadoworb)
     {
         return true;
     }
 
-    if (settings["tech splits"] && current.techcard > old.techcard && current.Loading == 0)
+    if (settings["tech splits"] && current.techcard > old.techcard)
     {
         return true;
     }
 
-    if (settings["catalyzer splits"] && current.catalyzer > old.catalyzer && current.Loading == 0)
+    if (settings["catalyzer splits"] && current.catalyzer > old.catalyzer)
     {
         return true;
     }
